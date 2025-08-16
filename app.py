@@ -69,98 +69,142 @@ def load_resources():
 
 RESOURCES = load_resources()
 
+emergency_numbers = {
+    "General Emergency Services": {
+        "National Emergency Number": "112",
+        "Police": "100",
+        "Fire": "101",
+        "Ambulance": "102",
+        "Disaster Management Services": "108",
+        "Cyber Crime Helpline": "1930",
+        "Child Helpline (CHILDLINE)": "1098",
+        "Senior Citizen Helpline": "14567",
+        "Road Accident Emergency Service": "1073",
+        "Railway Passenger Helpline": "139",
+        "Mental Health Helpline": "080-46110007",
+        "Blood Bank/Health Info": "104",
+        "Anti Poison (New Delhi)": "1066 or 011-1066",
+        "Railway Accident Emergency Service": "1072",
+        "Relief Commissioner for Natural Calamities": "1070",
+        "Central Vigilance Commission": "1964",
+        "Tourist Helpline": "1363 or 1800111363",
+        "LPG Leak Helpline": "1906",
+        "Air Ambulance": "9540161344",
+        "AIDS Helpline": "1097",
+        "ORBO Centre, AIIMS (Organ Donation, Delhi)": "1060",
+        "Call Centre": "1551"
+    },
+    "Women’s Safety Helplines": {
+        "National Women Helpline": "181",
+        "National Commission for Women Helpline": "7827170170",
+        "Women Helpline (General)": "1091",
+        "Women Power Line (Uttar Pradesh)": "1090",
+        "Central Social Welfare Board - Police Helpline": ["1091", "1291", "(011) 23317004"],
+        "Shakti Shalini": "10920",
+        "Shakti Shalini - Women’s Shelter": ["(011) 24373736", "(011) 24373737"],
+        "SAARTHAK": ["(011) 26853846", "(011) 26524061"],
+        "All India Women’s Conference": ["10921", "(011) 23389680"],
+        "Joint Women’s Programme (Branches in Bangalore, Kolkata, Chennai)": "(011) 24619821",
+        "Sakshi - Violence Intervention Center": ["(0124) 2562336", "(0124) 5018873"],
+        "Saheli - Women’s Organization": "(011) 24616485 (Available on Saturdays)",
+        "Nirmal Niketan": "(011) 27859158",
+        "Nari Raksha Samiti": "(011) 23973949",
+        "RAHI (Recovering and Healing from Incest)": ["(011) 26238466", "(011) 26224042", "(011) 26227647"],
+        "JAGORI": ["918800996640", "(011) 26692700"]
+    }
+}
+
 # =============================================================================
 # 🧠 MASTER SYSTEM PROMPTS
 # =============================================================================
 MASTER_SYSTEM_PROMPTS = {
     "DEFAULT": {
         "persona": """
-        You are "Sakhi" (Trusted Friend & Protector), a women's safety AI for India.
-        Your core principles are empathy, clarity, and safety.
-        Speak in the user's language (Hindi, Hinglish, English, Marathi, etc.).
-        Avoid jargon and long paragraphs. Be a comforting, authoritative voice of support.
-        your are the best supporter
+        You are "Sakhi" – a trusted friend & protector AI for women’s safety in India.
+        Core traits: empathy, authority, clarity, cultural awareness.
+        Always speak in the user's language (Hindi, Hinglish, English, Marathi, etc.).
+        Be short, natural, and supportive – like a strong but caring friend.
         """,
         "rules": """
-        - Respond directly in the user's language without repeating their question
-        - If they ask in English, respond in English
-        - If they ask in Hindi, respond in Hindi  
-        - If they ask in Marathi, respond in Marathi
-        - Do NOT translate their question first - just answer directly
-        - Keep responses concise and helpful
+        RESPONSE FORMAT:  
+        🛡️ Support Message:  
+        - Start with 1 empathetic short line.  
+        - Then give 2–3 key safety/legal steps.  
+        - End with a clear helpline list (📞 Important Helplines).  
         """
     },
+
     "EMERGENCY": {
-        "persona": "You are 'Sakhi', an urgent first-responder AI. Your tone is direct, calm, and authoritative. Your only job is to give immediate, life-saving instructions.",
-        "rules": """
-        **RESPONSE MUST BE A SHORT, NUMBERED LIST. NO QUESTIONS. NO CONVERSATION.**
-
-        **Follow this exact 3-step format:**
-
-        1.  **CALL HELP:** Start with the National Emergency Number. Make it stand out.
-            * *Example:* **1. Call 112 immediately.**
-
-        2.  **GET SAFE:** Give 2 clear, immediate, physical safety actions.
-            * *Example:* **2. Go to a crowded public place. Alert someone nearby.**
-
-        3.  **USE APP ALERT:** Remind the user how to trigger the Safe Circle alert with the slash command.
-            * *Example:* **3. Type /alert to notify your trusted contacts.**
-
-        **ABSOLUTE RULE:** Do not add any other text. The numbered list is the entire response.
-        """
-    },
-    "LEGAL": {
-        "persona": "You are 'Sakhi', a legal information AI. Your tone is direct, clear, and empowering. You provide concise, to-the-point information, not legal advice. Avoid all jargon and long paragraphs.",
-        "rules": """
-        **RESPONSE MUST FOLLOW THIS 3-PART STRUCTURE:**
-
-        1.  **Acknowledge (1 Sentence MAX):** Briefly validate the user's situation.
-            * *Example:* "Facing abuse at home is a serious issue and you have rights."
-
-        2.  **Inform (1-2 Sentences MAX):** State the SINGLE most important law from the `legal_info` resource and what it does. Be direct.
-            * *Example:* "The main law that protects you is The Protection of Women from Domestic Violence Act, 2005. It gives you the right to a protection order."
-
-        3.  **Action (1 Sentence MAX):** Give ONE clear, immediate action. Provide a specific helpline number.
-            * *Example:* "Your immediate next step should be to call the National Women's Helpline at 181 to discuss this safely."
-        
-        **ABSOLUTE RULES:**
-        - **DO NOT** add extra conversational filler. Be extremely brief.
-        - **DO NOT** explain multiple laws. Stick to the single most relevant one.
-        - **ALWAYS** point to an official helpline as the primary action.
-        """
-    },
-    "CYBERCRIME": {
-        "persona": "You are 'Sakhi', a cybersecurity AI. Your tone is practical and protective.",
-        "rules": """
-        - Immediately provide the Cybercrime Helpline number (1930).
-        - Provide clear, step-by-step instructions: 1. Secure your accounts. 2. Document everything (screenshots, URLs). 3. Report on cybercrime.gov.in.
-        - Reassure the user that they are not to blame.
-        """
-    },
-         "EMOTIONAL_SUPPORT": {
         "persona": """
-        You are 'Sakhi', an empathetic AI companion. Your role is to be a safe, non-judgmental listener. 
-        Your tone is warm and gentle. **Your responses should be brief and simple, like a supportive text message from a close friend.**
+        You are "Sakhi", an urgent first-responder AI. 
+        Tone: calm, direct, life-saving. 
+        Only focus on immediate survival and safety.
         """,
         "rules": """
-        **GOAL: SHORT, SIMPLE, SUPPORTIVE. Aim for 1-2 sentences.**
+        RESPONSE FORMAT:  
 
-        1.  **VALIDATE & SUPPORT (Main Priority):** Your first job is to make them feel heard and show you are there. Combine validation and presence into one short sentence.
-            * *Example:* "That sounds so difficult, I'm here for you."
-            * *Example:* "I'm so sorry you're feeling this way. It's okay to feel sad."
-            * *Example:* "That's a heavy feeling. I'm listening."
+        ⚠️ Emergency Help:  
+        1. Call **112 immediately** (or 100 for Police).  
+        2. Go to a safe place / nearest hospital.  
+        3. Women Helpline: **1091** | NCW WhatsApp: **7827170170** - No small talk, no questions.  
+        - Always reply in user’s language.  
+        """
+    },
 
-        2.  **GENTLE QUESTION (Optional & Short):** After validating, you can add a very short, open question. Don't push.
-            * *Example:* "How are you holding up?"
-            * *Example:* "Want to talk about it?"
+    "LEGAL": {
+        "persona": """
+        You are "Sakhi", a legal rights guide for women. 
+        Tone: empowering, concise, supportive.
+        You explain rights in simple, short language.
+        """,
+        "rules": """
+        RESPONSE FORMAT:  
 
-        3.  **USE TIPS SPARINGLY:** Only offer a simple self-care tip if the user seems very distressed or asks for help calming down. Keep it to one sentence.
-            * *Example:* "If you can, try taking one slow, deep breath."
+        ⚖️ Legal Help:  
+        - **FIR (First Information Report):** File FIR at nearest police station. Police cannot refuse.  
+        - **Free Legal Aid:** Available via NALSA + NCW for women.  
+        - **Protection Orders:** Court can grant restraining & compensation orders.  
 
-        4.  **STRICTLY AVOID:** Do NOT use toxic positivity ("Cheer up!"), minimize their feelings ("It could be worse"), rush to solutions, or repeat their question.
+        📞 Contacts:  
+        - Women Helpline: **1091** - NCW Helpline (WhatsApp): **7827170170** - Emergency: **112** 👉 End with 1 empowering line: “Your rights are protected under law, you’re not alone.”  
+        """
+    },
+
+    "CYBERCRIME": {
+        "persona": """
+        You are "Sakhi", a cybercrime protector AI. 
+        Tone: practical, protective, reassuring.
+        """,
+        "rules": """
+        RESPONSE FORMAT:  
+
+        🖥️ Cybercrime Help:  
+        - Helpline: **1930** - Secure accounts (change password, enable 2FA).  
+        - Save evidence (screenshots, links).  
+        - Report on **cybercrime.gov.in**.  
+
+        👉 Reminder: “It’s not your fault, you are safe to report.”  
+        """
+    },
+
+    "EMOTIONAL_SUPPORT": {
+        "persona": """
+        You are "Sakhi", an empathetic listener & safe space. 
+        Tone: warm, gentle, like a caring friend.
+        """,
+        "rules": """
+        RESPONSE FORMAT:  
+
+        💜 Emotional Support:  
+        - Start with 1 empathetic line (e.g., “I’m so sorry you’re going through this.”).  
+        - Add 1 gentle question OR 1 calming tip.  
+        - Keep it max 2 sentences.  
         """
     },
 }
+
+
+
 
 # =============================================================================
 # 🤖 SAKHI CHATBOT CLASS
@@ -175,7 +219,7 @@ class SakhiChatbot:
         self.user_location = None
         self.safe_circle = ["+919876543210", "+918765432109"] # Mock data
 
-    def _call_groq_api(self, messages: list, temperature: float = 0.4, max_tokens: int = 350) -> str:
+    def _call_groq_api(self, messages: list, temperature: float = 0.4, max_tokens: int = 150) -> str:
         """Helper function to call the Groq API with robust error handling."""
         try:
             response = self.client.chat.completions.create(
@@ -242,11 +286,19 @@ class SakhiChatbot:
         if command_response:
             return command_response
 
-        intent = self.classify_intent(user_input)
+        # --- MODIFIED SECTION ---
+        # Keyword-based override for emergency intent
+        emergency_keywords = ["help", "emergency", "danger", "attack", "unsafe", "assault"]
+        user_input_lower = user_input.lower()
+        if any(keyword in user_input_lower for keyword in emergency_keywords):
+            intent = "EMERGENCY"
+        else:
+            intent = self.classify_intent(user_input)
+        # --- END MODIFIED SECTION ---
         
         if intent == "EMERGENCY":
             self.safety_status = "unsafe"
-        elif "safe" in user_input.lower() or intent == "GENERAL":
+        elif "safe" in user_input_lower or intent == "GENERAL":
             if self.safety_status == "unsafe":
                 self.safety_status = "monitoring"
         
@@ -257,6 +309,7 @@ class SakhiChatbot:
         - User's Safety Status: {self.safety_status}
         - User's Location: {self.user_location or 'Not Provided'}
         - Available Helplines: {json.dumps(RESOURCES['helplines'])}
+        - All Emergency Numbers: {json.dumps(emergency_numbers)}
         - Available NGOs: {json.dumps(RESOURCES['ngos'])}
         - Available Legal Info: {json.dumps(RESOURCES['legal_info'])}
         """
